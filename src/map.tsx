@@ -282,6 +282,16 @@ const ReactMapboxFactory = ({
       this.listeners = listenEvents(events, this.props, map);
     }
 
+    public componentDidUpdate(prevProps: Readonly<Props>) {
+      const { map } = this.state;
+      if (
+        map &&
+        !isEqual(prevProps.containerStyle, this.props.containerStyle)
+      ) {
+        map.resize();
+      }
+    }
+
     public componentWillUnmount() {
       const { map } = this.state;
       this._isMounted = false;
